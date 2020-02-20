@@ -1,4 +1,4 @@
-import 'package:dynamic_dart_fields/features/account/data/models/views/_views.dart';
+import 'package:dynamic_dart_fields/features/account/domain/models/views/_views.dart';
 import 'package:flutter/material.dart';
 
 class LoggedDisplay extends StatelessWidget {

@@ -1,32 +1,31 @@
-import 'package:dynamic_dart_fields/features/account/data/models/bindings/_bindings.dart';
-import 'package:dynamic_dart_fields/features/account/data/models/views/_views.dart';
+import 'package:dynamic_dart_fields/features/account/domain/entities/_entities.dart';
 
 abstract class IAccountLocalDataSource {
   /// Throws a [CacheException] for all error codes.
-  Future<UserViewModel> login(AccountBindingModel model);
+  Future<User> login(Account model);
 
   /// Throws a [CacheException] for all error codes.
-  Future<AccountBindingModel> register(AccountBindingModel model);
+  Future<Account> register(Account model);
 
   /// Throws a [CacheException] for all error codes.
-  bool cachelogin(UserViewModel model);
+  bool cachelogin(User model);
 }
 
 class AccountLocalDataSource extends IAccountLocalDataSource {
   @override
-  bool cachelogin(UserViewModel model) {
+  bool cachelogin(User model) {
     // TODO: implement cachelogin
     return null;
   }
 
   @override
-  Future<UserViewModel> login(AccountBindingModel model) {
+  Future<User> login(Account model) {
     // TODO: implement login
     return null;
   }
 
   @override
-  Future<AccountBindingModel> register(AccountBindingModel model) {
+  Future<Account> register(Account model) {
     // TODO: implement register
     return null;
   }

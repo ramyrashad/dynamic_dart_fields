@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:dynamic_dart_fields/core/_refrance/com_refrance.dart';
 import 'package:dynamic_dart_fields/core/_refrance/ex_refrance.dart';
-import 'package:dynamic_dart_fields/features/account/data/models/bindings/_bindings.dart';
-import 'package:dynamic_dart_fields/features/account/data/models/views/_views.dart';
+import 'package:dynamic_dart_fields/features/account/data/mappers/_mappers.dart';
+import 'package:dynamic_dart_fields/features/account/domain/entities/_entities.dart';
 import 'package:meta/meta.dart';
 
 abstract class IAccountRemoteDataSource {
   /// Throws a [ServerException] for all error codes.
-  Future<UserViewModel> login(AccountBindingModel model);
+  Future<User> login(Account entity);
 
   /// Throws a [ServerException] for all error codes.
-  Future<AccountBindingModel> register(AccountBindingModel model);
+  Future<Account> register(Account entity);
 }
 
 class AccountRemoteDataSource implements IAccountRemoteDataSource {
@@ -19,24 +19,26 @@ class AccountRemoteDataSource implements IAccountRemoteDataSource {
   AccountRemoteDataSource({@required this.dioService});
 
   @override
-  Future<UserViewModel> login(AccountBindingModel model) async {
-    Response response =
-        await this.dioService.dio.post('token', data: model.toJson());
+  Future<User> login(Account entity) async {
+    Response response = await this
+        .dioService
+        .dio
+        .post('token', data: AccountMapper.fromEntity(entity));
     return _getResponseData(response);
   }
 
   @override
-  Future<AccountBindingModel> register(AccountBindingModel model) async {
+  Future<Account> register(Account entity) async {
     Response response = await this
         .dioService
         .dio
-        .post<AccountBindingModel>('token', data: model.toJson());
+        .post<Account>('token', data: AccountMapper.fromEntity(entity));
     return response.data;
   }
 
-  UserViewModel _getResponseData(Response response) {
+  User _getResponseData(Response response) {
     if (response.statusCode == 200)
-      return UserViewModel.fromJson(response.data);
+      return UserMapper.fromJson(response.data);
     else
       throw ServerException();
   }
