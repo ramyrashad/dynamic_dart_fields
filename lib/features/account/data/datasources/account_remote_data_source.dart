@@ -40,6 +40,6 @@ class AccountRemoteDataSource implements IAccountRemoteDataSource {
     if (response.statusCode == 200)
       return UserMapper.fromJson(response.data);
     else
-      throw ServerException();
+      throw ServerException(response.data);
   }
 }

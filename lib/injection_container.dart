@@ -14,6 +14,10 @@ import 'features/account/data/repositories/_repositories.dart';
 import 'features/account/domain/repo_interfaces/_repo_interfaces.dart';
 import 'features/account/domain/services/account_service.dart';
 import 'features/account/presentation/login/bloc/login_bloc.dart';
+import 'features/workflow_service/data/datasources/_datasources.dart';
+import 'features/workflow_service/data/repositories/_repositories.dart';
+import 'features/workflow_service/domain/repo_interfaces/_repo_interfaces.dart';
+import 'features/workflow_service/domain/services/_services.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -30,10 +34,19 @@ Future<void> init() async {
 
   // Services
   sl.registerLazySingleton(() => AccountService(repository: sl()));
+  sl.registerLazySingleton(() => WorkflowService(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<IAccountRepository>(
     () => AccountRepository(
+      localDataSource: sl(),
+      networkInfo: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<IWorkflowFormRepository>(
+    () => WorkflowFormRepository(
       localDataSource: sl(),
       networkInfo: sl(),
       remoteDataSource: sl(),
@@ -47,6 +60,14 @@ Future<void> init() async {
 
   sl.registerLazySingleton<IAccountLocalDataSource>(
     () => AccountLocalDataSource(),
+  );
+
+  sl.registerLazySingleton<IWorkflowFormRemoteDataSource>(
+    () => WorkflowFormRemoteDataSource(dioService: sl()),
+  );
+
+  sl.registerLazySingleton<IWorkflowFormLocalDataSource>(
+    () => WorkflowFormLocalDataSource(),
   );
 
   //! Core
